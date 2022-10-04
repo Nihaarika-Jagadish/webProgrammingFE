@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux'
-import { TokenSelector } from "../users/userSlice";
-import Cookies from 'universal-cookie';
-import { configurationVariables } from '../../Api';
-import { Typography } from "@material-ui/core";
-import Navbar from "../Navbar/Navbar";
-import Lottie from 'react-lottie';
+import { setToken, TokenSelector } from "../users/userSlice";
 import * as animationData from '../../images/search.json';
+import { Button, Typography } from "@material-ui/core";
+import Lottie from 'react-lottie';
+import Navbar from "../Navbar/Navbar";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        background: 'white',
+        // background: 'white',
         minWidth: '100vw',
-        backgroundImage: "url('../../images/back.jpeg')",
+        minHeight:'100vh',
+        // backgroundImage: "url(/back.jpeg)",
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
         backgroundAttachment: "fixed",
@@ -58,6 +57,21 @@ const useStyles = makeStyles((theme) => ({
         textShadow: "0px 0.5px, 0.5px 0px, 0.5px 0.5px",
         margin: "5vh"
     },
+    lottieClass:{
+        marginTop:"100px"
+    },
+    getStartedButton:{
+        color:"white",
+        background:"#003566",
+        fontFamily: 'Montserrat',
+        fontWeight: "900",
+        "&:hover": {
+            color:"#003566",
+        background:"white",
+        fontFamily: 'Montserrat',
+        fontWeight: "900",
+          }
+    }
 }));
 
 export default function LandingPage() {
@@ -68,27 +82,40 @@ export default function LandingPage() {
         autoplay: true,
         animationData: animationData.default,
         rendererSettings: {
-          preserveAspectRatio: 'xMidYMid slice'
+            preserveAspectRatio: 'xMidYMid slice'
         }
-      };
+    };
+    const tokenSelector = useSelector(TokenSelector);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (localStorage.getItem('token') != null || localStorage.getItem('token') != undefined) {
+            dispatch(setToken(true))
+        }
+        else {
+            dispatch(setToken(false))
+        }
+    }, [dispatch])
 
 
     return (
         <>
-            <Navbar />
-            <div className={classes.root}>
-                <div className={classes.leftDiv}>
-                    <Typography className={classes.welcomeText} variant="h1">WELCOME TO</Typography>
-                    <Typography className={classes.legalText} variant="h6">Figure Annotation</Typography>
-                    <Typography className={classes.belowText} variant="h6">Supports annotation of compound figure segmentation and semantic information extraction. </Typography>
+            {(!tokenSelector) ?
+                <div className={classes.root}>
+                    <div className={classes.leftDiv}>
+          <Typography className={classes.welcomeText} variant="h1">WELCOME TO</Typography>
+          <Typography className={classes.legalText} variant="h6">Figure Annotation</Typography>
+          <Typography className={classes.belowText} variant="h6">Supports annotation of compound figure segmentation and semantic information extraction.</Typography>
+          <Button variant="contained" className={classes.getStartedButton}>
+            GET STARTED
+          </Button>
+        </div>
+        <div className={classes.rightDiv}>
+            <Lottie options={defaultOptions}
+    style={{height: 500, width:500, marginTop:"100px"}}/>
+
+        </div>
                 </div>
-                <div className={classes.rightDiv}>
-                    <Lottie options={defaultOptions}
-                        height={500}
-                        width={500}
-                    />
-                </div>
-            </div>
+                : <div> Not logged in</div>}
         </>
     )
 }

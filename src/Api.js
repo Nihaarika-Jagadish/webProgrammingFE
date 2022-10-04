@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
 export function isLocalhost() {
     return (window.location.host.includes("127.0.0.1") || window.location.host.includes("localhost"));
@@ -9,11 +8,11 @@ export function configurationVariables(category){
     if(isLocalhost()){
         switch(category){
             case "url":
-                return 'https://d-lipnetapi.mapcom.local/api/v2'
+                return 'http://localhost:3013'
             case "cookieDomain":
                 return 'localhost'
             case 'returnTo':
-                return 'https://d-lipnetportal.mapcom.local/'
+                return 'http://localhost:3013'
             default:
                 break
         }
@@ -21,11 +20,11 @@ export function configurationVariables(category){
     else{
         switch(category){
             case "url":
-                return 'https://d-lipnetapi.mapcom.local/api/v2'
+                return 'http://localhost:3013'
             case "cookieDomain":
-                return '.mapcom.local'
+                return 'localhost'
             case 'returnTo':
-                return 'https://d-lipnetportal.mapcom.local/'
+                return 'http://localhost:3013'
             default:
                 break
         }
@@ -33,9 +32,8 @@ export function configurationVariables(category){
 }
 
 export function call(url, parameters, successHandler, errorHandler, requestType) {
-    const cookies = new Cookies();
     const cookieDomain = configurationVariables('cookieDomain')
-    const token = cookies.get("token");
+    const token = localStorage.getItem("token");
     if (!parameters.headers) {
         parameters.headers = {};
     }
@@ -61,14 +59,13 @@ export function call(url, parameters, successHandler, errorHandler, requestType)
                     }
                 } else if (response.status === 401) {
                     // 
-                    if(cookies.get('user') == 'true'){
-                        cookies.remove('token', { domain: cookieDomain })
-                        cookies.remove('user', { domain: cookieDomain })
-
+                    if(localStorage.get('tokenPresent') == true){
+                        localStorage.removeItem('token')
+                        localStorage.removeItem('tokenPresent')
                         window.location.href = configurationVariables('returnTo')
                     }
                 } else {
-                    Swal.fire(JSON.parse(content)["Message"], '', 'error').then((result) => {
+                    Swal.fire(JSON.parse(content)["message"], '', 'error').then((result) => {
                     })
                     errorHandler(response.statusText, content, response.status)
                 }
