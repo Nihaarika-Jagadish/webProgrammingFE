@@ -1,5 +1,10 @@
 import { Button, makeStyles } from "@material-ui/core"
 import SearchIcon from '@mui/icons-material/Search';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import DisplayAnnotatedResultTable from "./DisplayAnnotatedResult";
+import DisplayResultTable from "./DisplayResultTable";
+import { elasticSearch, getAnnotatedSearchResult } from "./homeSlice";
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
@@ -61,17 +66,57 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Montserrat',
         fontWeight: "900",
           }
+      },
+      submitButton1:{
+        color:"white",
+        background:"#003566",
+        fontFamily: 'Montserrat',
+        fontWeight: "900",
+        // width:"1000px",
+        "&:hover": {
+            color:"#003566",
+        background:"white",
+        fontFamily: 'Montserrat',
+        fontWeight: "900",
+          }
       }
 }))
 export function SearchPage() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const [searchValue, setSearchValue] = useState('');
+    const [searchClicked, setSearchClicked] = useState(false);
+    const [annotatedClicked, setAnnotatedClicked] = useState(false)
+
+    const handleSearchbarChange = (e) => {
+      setSearchValue(e.target.value)
+    }
+
+    const handleSearch = () => {
+      if(searchValue.length != 0){
+        dispatch(elasticSearch(searchValue));
+        setSearchClicked(true)
+        setAnnotatedClicked(false)
+      }
+    }
+
+    const handleSearchAnnotationTasks = () => {
+      if(searchValue.length == 0){
+        setSearchClicked(false)
+        setAnnotatedClicked(true)
+        dispatch(getAnnotatedSearchResult(localStorage.getItem('user_id')));
+      }
+      else{
+        
+      }
+    }
 
     return (
+      <>
         <div className={classes.root}>
             <div>
             <img
         src={`/logo1.png`}
-        // srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
         alt=''
         loading="lazy"
         style={{height:"150px"}}
@@ -79,13 +124,23 @@ export function SearchPage() {
       <div className={classes.wrapper}>
   <div className={classes.label}>Submit your search</div>
   <div className={classes.searchBar}>
-    <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value="" className={classes.searchQueryInput}/>
-    <Button variant="contained" className={classes.submitButton}>
+    <input id="searchQueryInput" type="text" name="searchQueryInput" placeholder="Search" value={searchValue} className={classes.searchQueryInput} onChange={handleSearchbarChange}/>
+    <Button variant="contained" className={classes.submitButton} onClick={handleSearch}>
         <SearchIcon/>
                 </Button>
+                
   </div>
+  <br/>
+  <Button variant="contained" className={classes.submitButton1} onClick={handleSearchAnnotationTasks}>
+                Search Annotation Tasks
+                </Button>
+
 </div>
 </div>
         </div>
+{searchClicked && <DisplayResultTable/>}
+{annotatedClicked && <DisplayAnnotatedResultTable/>}
+</>
+
     )
 }

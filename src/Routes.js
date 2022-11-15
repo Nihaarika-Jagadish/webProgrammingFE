@@ -16,6 +16,7 @@ import { SearchPage } from './components/homePage/SearchPage';
 import { ProfilePage } from './components/Profile/Profile';
 import ForgotPasswordPage from './components/users/ForgotPassword';
 import { AdminHomePage } from './components/homePage/AdminHomePage';
+import MainPageUserGroup from './components/UserGroup.js/MainPage';
 
 export default function Routes () {
     return <div> <Router history={history}>
@@ -28,6 +29,8 @@ export default function Routes () {
         <Route path="/profile" exact component= {ProfilePage} />
         <Route path="/forgotPassword" exact component= {ForgotPasswordPage} />
         <Route path="/adminHome" exact component= {AdminHomePage} />
+        <Route path="/userGroup" exact component= {MainPageUserGroup} />
+
 
         
 

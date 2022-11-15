@@ -2,17 +2,17 @@ import { Button, Card, CardContent, makeStyles, Paper, styled, Table, TableBody,
 import { tableCellClasses } from '@mui/material/TableCell';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { AllUsersSelector, approveUser, getAllUsers } from "./homeSlice";
+import { AllUserGroupSelector, AllUsersSelector, approveUser, getAllUsers } from "../homePage/homeSlice";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { getProfileInfo } from "../users/userSlice";
+import { getAllUserGroups } from "../homePage/homeSlice";
 
 const useStyles = makeStyles(() => ({
     root: {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100vh",
-      marginTop:"200px",
+      // height: "100vh",
+      // marginTop:"200px",
       // overflow:"scroll"
     },
     heading: {
@@ -104,63 +104,21 @@ const useStyles = makeStyles(() => ({
       border: 0,
     },
   }));
-export function AdminHomePage(){
+export function UserGroupTable(){
     const dispatch = useDispatch();
-    const allUsers = useSelector(AllUsersSelector);
     const classes = useStyles();
+    const allUserGrops = useSelector(AllUserGroupSelector)
 
     useEffect(() => {
-        dispatch(getAllUsers())
-        dispatch(getProfileInfo(localStorage.getItem('token')));
+        dispatch(getAllUserGroups());
     },[dispatch])
-
-    const approveUserFunc = (email) => {
-        console.log("insideeeee")
-        dispatch(approveUser(email));
-
-    }
-
-    const formatPhoneNumber = (value) => {
-        // if input value is falsy eg if the user deletes the input, then just return
-        if (!value) return value;
-
-        // clean the input for any non-digit values.
-        const phoneNumber = value.replace(/[^\d]/g, "");
-        // phoneNumberLength is used to know when to apply our formatting for the phone number
-        const phoneNumberLength = phoneNumber.length;
-
-        // we need to return the value with no formatting if its less then four digits
-        // this is to avoid weird behavior that occurs if you  format the area code to early
-        if (phoneNumberLength < 4) {
-            // setFormValue({ ...formValue, phoneNumber: phoneNumber });
-            return phoneNumber;
-        }
-
-        // if phoneNumberLength is greater than 4 and less the 7 we start to return
-        // the formatted number
-        if (phoneNumberLength < 7) {
-            // setFormValue({ ...formValue, phoneNumber: phoneNumber });
-            return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-        }
-
-        // finally, if the phoneNumberLength is greater then seven, we add the last
-        // bit of formatting and return it.
-        // setFormValue({ ...formValue, phoneNumber: phoneNumber });
-        return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
-            3,
-            6
-        )}-${phoneNumber.slice(6, 10)}`;
-    };
 
     return (
 
             <div className={classes.root}>
               <div>
                 <Typography variant="h3" className={classes.heading}>
-                  List of All Users
-                </Typography>
-                <Typography variant="p" className={classes.heading1}>
-                    Please wait for your request to be approved by the admin.
+                  List of All User Groups
                 </Typography>
                 <Card className={classes.cardClass} elevation={6}>
             <CardContent>
@@ -171,26 +129,21 @@ export function AdminHomePage(){
 
 
           <TableRow>
-          <StyledTableCell>Profile</StyledTableCell>
             <StyledTableCell>First Name</StyledTableCell>
             <StyledTableCell align="left">Last Name</StyledTableCell>
-            <StyledTableCell align="left">Email Address</StyledTableCell>
-            <StyledTableCell align="left">Phone Number</StyledTableCell>
-            <StyledTableCell align="left">Role</StyledTableCell>
-            <StyledTableCell align="left">Approve Status</StyledTableCell>
+            <StyledTableCell align="left">Assigned Group ID</StyledTableCell>
+            <StyledTableCell align="left">Assigned Datetime</StyledTableCell>
+            <StyledTableCell align="left">#Compound figures</StyledTableCell>
+            <StyledTableCell align="left">#Finished</StyledTableCell>
 
           </TableRow>
         </TableHead>
         {
-            allUsers && allUsers != undefined && allUsers.length != 0 && allUsers[0] != undefined && 
+            allUserGrops && allUserGrops != undefined && allUserGrops.length != 0 && allUserGrops[0] != undefined && 
             <TableBody>
                 {
-                    allUsers.map((row) => (
+                    allUserGrops.map((row) => (
             <StyledTableRow key={row.user_id}>
-                <StyledTableCell >
-                    <img src={row.profile_photo} className={classes.avatar}>
-                    </img>
-                </StyledTableCell>
                 <StyledTableCell>
                     {row.first_name}
                 </StyledTableCell>
@@ -198,27 +151,16 @@ export function AdminHomePage(){
                     {row.last_name}
                 </StyledTableCell>
                 <StyledTableCell>
-                    {row.email}
+                    {row.groupID}
                 </StyledTableCell>
                 <StyledTableCell>
-                    {formatPhoneNumber(row.user_phone)}
+                    {row.created_at}
                 </StyledTableCell>
                 <StyledTableCell>
-                    {
-                        row.role_id == 1? "Admin":"User"
-                    }
+                    {row.count_of_compoundfigures}
                 </StyledTableCell>
-                <StyledTableCell align="center">
-                    {
-                        row.approved == 1?
-                        <Tooltip title='Approved'>
-                            <CheckBoxIcon color="green" style={{color:"green"}}/>
-                        </Tooltip>
-                        :
-                        <Button variant="contained" className={classes.submitButton} onClick={() => approveUserFunc(row.email)}>
-                            Approve
-                        </Button>
-                    }
+                <StyledTableCell>
+                    0
                 </StyledTableCell>
 
 

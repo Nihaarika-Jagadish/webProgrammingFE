@@ -45,6 +45,8 @@ export function registerUser(formData){
                 //if success
                 response = JSON.parse(response);
                 localStorage.setItem("token", response['data']['token']);
+                localStorage.setItem("user_id", response['data']['user_id']);
+                localStorage.setItem("role_id", response['data']['role_id']);
                 localStorage.setItem("tokenPresent", true);
                 dispatch(setToken(true))
                 dispatch(setMe(response['data']))
@@ -74,6 +76,8 @@ export function loginUser(formData){
                 //if success
                 response = JSON.parse(response);
                 localStorage.setItem("token", response['data']['token']);
+                localStorage.setItem("user_id", response['data']['user_id']);
+                localStorage.setItem("role_id", response['data']['role_id']);
                 localStorage.setItem("tokenPresent", true);
                 dispatch(setToken(true))
                 dispatch(setMe(response['data']))
