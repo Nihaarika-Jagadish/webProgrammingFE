@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormControlLabel, FormLabel, Grid, makeStyles, Paper, Radio, RadioGroup, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@material-ui/core"
+import { Box, Button, FormControl, FormControlLabel, FormHelperText, FormLabel, Grid, makeStyles, Paper, Radio, RadioGroup, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@material-ui/core"
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnnotatedPanelResultSelector, AnnotatedPanelResultSelector1, AnnotatedSearchResultSelector, annotateValue, getAnnotatedPanelResult, getAnnotatedPanelResult1, getAnnotatedSearchResult } from "../homePage/homeSlice";
@@ -175,8 +175,8 @@ export function EachFigureCopy() {
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="center">Compund Figure Details</StyledTableCell>
-                            <StyledTableCell align="center">Sub Figures Details</StyledTableCell>
+                            <StyledTableCell align="center">Compound Figure Details</StyledTableCell>
+                            <StyledTableCell align="center">Segmented Subfigure Details</StyledTableCell>
 
 
 
@@ -186,9 +186,9 @@ export function EachFigureCopy() {
                         <TableRow>
                             <TableCell>
 
-                                <img src={subfigures[0]?.figure_file_url} width="400" height="450" />
+                                <img src={subfigures[0]?.figure_file_url} width="350" height="450" />
                                 <Typography><b>Compound Figure File Name: </b>{id}</Typography>
-                                <FormControl className={classes.formControl}>
+                                <FormControl className={classes.formControl} error={submitted && formValue["segmentedRight"] == ""}>
                                     <FormLabel id="demo-radio-buttons-group-label"
                                         error={submitted && formValue["segmentedRight"] == ""}
                                         helperText={
@@ -210,6 +210,7 @@ export function EachFigureCopy() {
                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
                                     </RadioGroup>
+                                    {submitted && formValue["segmentedRight"] == "" && <FormHelperText>Required *</FormHelperText>}
                                 </FormControl>
                                 <br />
                                 <FormControl className={classes.formControl}>
@@ -252,7 +253,7 @@ export function EachFigureCopy() {
                                                 </div>
                                             </Box>
                                             <Box className={classes.optionsBox}>
-                                                <FormControl className={classes.formControl}>
+                                                <FormControl className={classes.formControl} error={submitted && (formValue["objectCorrect" + index] == undefined || formValue["objectCorrect" + index] == "")}>
                                                     <FormLabel id="demo-radio-buttons-group-label"
                                                         error={submitted && (formValue["objectCorrect" + index] == undefined || formValue["objectCorrect" + index] == "")}
                                                         helperText={
@@ -275,6 +276,7 @@ export function EachFigureCopy() {
                                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
                                                     </RadioGroup>
+                                                    {submitted && (formValue["objectCorrect" + index] == undefined || formValue["objectCorrect" + index] == "") && <FormHelperText>Required *</FormHelperText>}
                                                 </FormControl>
                                                 <br />
                                                 <FormControl className={classes.formControl}>
@@ -303,7 +305,7 @@ export function EachFigureCopy() {
 
                                             </Box>
                                             <Box className={classes.optionsBox}>
-                                                <FormControl className={classes.formControl}>
+                                                <FormControl className={classes.formControl} error={submitted && (formValue["aspectCorrect" + index] == undefined || formValue["aspectCorrect" + index] == "")}>
                                                     <FormLabel id="demo-radio-buttons-group-label"
                                                         error={submitted && (formValue["aspectCorrect" + index] == undefined || formValue["aspectCorrect" + index] == "")}
                                                         helperText={
@@ -327,6 +329,7 @@ export function EachFigureCopy() {
                                                         <FormControlLabel value="No" control={<Radio />} label="No" />
                                                         <FormControlLabel value="Unknown" control={<Radio />} label="Unknown" />
                                                     </RadioGroup>
+                                                    {submitted && (formValue["aspectCorrect" + index] == undefined || formValue["aspectCorrect" + index] == "") && <FormHelperText>Required *</FormHelperText>}
                                                 </FormControl>
                                                 <br />
                                                 <FormControl className={classes.formControl}>

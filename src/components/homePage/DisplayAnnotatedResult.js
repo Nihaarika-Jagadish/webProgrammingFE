@@ -180,8 +180,8 @@ export default function DisplayAnnotatedResultTable() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-                        <StyledTableCell align="center">Compund Figure File Name</StyledTableCell>
-                        <StyledTableCell align="center">Compund Figure</StyledTableCell> 
+                        <StyledTableCell align="center">Compound Figure File Name</StyledTableCell>
+                        <StyledTableCell align="center">Compound Figure</StyledTableCell> 
                         <StyledTableCell align="center">Caption of the figure</StyledTableCell> 
                         {/* <StyledTableCell align="center">Sub figure</StyledTableCell>  */}
 
@@ -198,7 +198,7 @@ export default function DisplayAnnotatedResultTable() {
             >
                 <TableCell>{eachRow['figure_file']}</TableCell>
                 <TableCell>
-                    <img src={eachRow['figure_file_url']}  width="400" height="400"/>
+                    <img src={eachRow['figure_file_url']}  width="320" height="450"/>
                 </TableCell>
                 <TableCell>{eachRow['caption']}
                 <br/>

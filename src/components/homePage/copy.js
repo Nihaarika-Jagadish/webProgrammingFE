@@ -179,8 +179,8 @@ export default function DisplayAnnotatedResultTable() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-                        <StyledTableCell align="center">Compund Figure File Name</StyledTableCell>
-                        <StyledTableCell align="center">Compund Figure</StyledTableCell> 
+                        <StyledTableCell align="center">Compound Figure File Name</StyledTableCell>
+                        <StyledTableCell align="center">Compound Figure</StyledTableCell> 
                         <StyledTableCell align="center">Caption of the figure</StyledTableCell> 
                         {/* <StyledTableCell align="center">Sub figure</StyledTableCell>  */}
 

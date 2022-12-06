@@ -133,10 +133,8 @@ export function EachFigure(props) {
     <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-                        <StyledTableCell align="center">Compund Figure Details</StyledTableCell>
-                        <StyledTableCell align="center">Sub Figures Details</StyledTableCell> 
-
-                
+                        <StyledTableCell align="center">Compound Figure Details</StyledTableCell>
+                        <StyledTableCell align="center">Segmmented Sub-Figures Details</StyledTableCell> 
             
           </TableRow>
         </TableHead>

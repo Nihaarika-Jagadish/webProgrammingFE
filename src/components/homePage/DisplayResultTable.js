@@ -202,8 +202,8 @@ export default function DisplayResultTable() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-                        <StyledTableCell align="center">Compund Figure File Name</StyledTableCell>
-                        <StyledTableCell align="center">Compund Figure</StyledTableCell> 
+                        <StyledTableCell align="center">Compound Figure File Name</StyledTableCell>
+                        <StyledTableCell align="center">Compound Figure</StyledTableCell> 
                         <StyledTableCell align="center">Caption of the figure</StyledTableCell> 
                         {/* <StyledTableCell align="center">Sub figure</StyledTableCell>  */}
 
@@ -220,7 +220,7 @@ export default function DisplayResultTable() {
             >
                 <TableCell >{eachRow["_source"]['figure_file']}</TableCell>
                 <TableCell>
-                    <img src={eachRow["_source"]["figure_url"]}  width="400" height="400"/>
+                    <img src={eachRow["_source"]["figure_url"]}  width="320" height="450"/>
                 </TableCell>
                 <TableCell align="center">{eachRow["_source"]['caption']}</TableCell>
                 {/* <TableCell>{eachRow["_source"]['subfigure_file']}</TableCell> */}
