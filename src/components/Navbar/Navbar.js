@@ -90,6 +90,7 @@ export default function Navbar() {
           {!tokenSelector &&  <Button className={classes.loginButton} onClick={() => history.push('/login')}>LOG IN</Button>}
           {!tokenSelector &&  <Button className={classes.registerButton} onClick={() => history.push('/register')}>SIGN UP</Button>}
           {tokenSelector && localStorage.getItem('role_id') == 1 && <Button className={classes.loginButton} onClick={() => history.push('/userGroup')}>User Groups</Button>}
+          {/* {tokenSelector && <Button className={classes.loginButton} onClick={() => history.push('/annotationpanel')}>Annotation Panel</Button>} */}
           {tokenSelector && <Button className={classes.loginButton} onClick={() => history.push('/profile')}>My Profile</Button>}
           {tokenSelector && <Button className={classes.registerButton} onClick={() => {logoutFunction(); history.push('/')}}>LOG OUT</Button>}
         </div>

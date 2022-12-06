@@ -126,7 +126,7 @@ console.log()
         </Typography>
         <Typography variant="p" className={classes.heading1}>
           Don't have an account yet?{" "}
-          <a href="http://localhost:3000/register">Sign Up</a>
+          <a href="https://localhost:3000/register">Sign Up</a>
         </Typography>
         <div>
           <Card className={classes.cardClass} elevation={6}>
@@ -182,7 +182,7 @@ console.log()
                   //     : ""
                   // }
                 />
-                <a href="http://localhost:3000/forgotPassword" className={classes.forgotPswd}>Forgot Password?</a>
+                <a href="https://localhost:3000/forgotPassword" className={classes.forgotPswd}>Forgot Password?</a>
                 
 
                 </FormControl>

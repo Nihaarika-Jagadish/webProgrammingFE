@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { AllUserGroupSelector, AllUsersSelector, approveUser, getAllUsers } from "../homePage/homeSlice";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { getAllUserGroups } from "../homePage/homeSlice";
+import moment from "moment";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -154,7 +155,7 @@ export function UserGroupTable(){
                     {row.groupID}
                 </StyledTableCell>
                 <StyledTableCell>
-                    {row.created_at}
+                    {moment(row.created_at).format("YYYY-MM-DD HH:mm:ss")}
                 </StyledTableCell>
                 <StyledTableCell>
                     {row.count_of_compoundfigures}

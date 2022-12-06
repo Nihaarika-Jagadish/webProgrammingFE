@@ -11,10 +11,12 @@ import { AnnotatedSearchResultSelector, ElasticSearchSelector } from './homeSlic
 import TablePagination from '@mui/material/TablePagination';
 import { initializeApp } from "firebase/app";
 import {ref, getDownloadURL, getStorage, connectStorageEmulator} from "firebase/storage"
-import { makeStyles, Typography } from '@material-ui/core';
+import { Button, makeStyles, Typography } from '@material-ui/core';
 import { Print } from '@material-ui/icons';
 import { styled } from "@material-ui/core";
 import { tableCellClasses } from '@mui/material/TableCell';
+import history from '../../History';
+
 const firebaseConfig = {
   apiKey: "AIzaSyDlOjVs-VQaFQR7JhAwEp7g5k_c9YrRTcQ",
   authDomain: "web-project-eb94d.firebaseapp.com",
@@ -150,6 +152,7 @@ const useStyles = makeStyles(() => ({
 
 export default function DisplayAnnotatedResultTable() {
     const annotatedSearchResult = useSelector(AnnotatedSearchResultSelector);
+    const classes = useStyles();
     const [totalValue, setTotalValue] = React.useState(0)
     const [result, setResult] = React.useState([])
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -197,7 +200,14 @@ export default function DisplayAnnotatedResultTable() {
                 <TableCell>
                     <img src={eachRow['figure_file_url']}  width="400" height="400"/>
                 </TableCell>
-                <TableCell>{eachRow['caption']}</TableCell>
+                <TableCell>{eachRow['caption']}
+                <br/>
+                <br/>
+
+                <Button variant="contained" onClick={() => history.push('/annotationpanel/' + eachRow['figure_file'])} className={classes.submitButton}>
+                  Annototate Figure
+                            </Button>
+                </TableCell>
                 {/* <TableCell>{eachRow['subfigure_file']}</TableCell> */}
 
             </TableRow>

@@ -148,7 +148,7 @@ function Registration() {
                 </Typography>
                 <Typography variant="p" className={classes.heading1}>
                     Already have an account?{" "}
-                    <a href="http://localhost:3000/login">Login</a>
+                    <a href="https://localhost:3000/login">Login</a>
                 </Typography>
                 <Card className={classes.cardClass}>
                     <CardContent>

@@ -17,6 +17,8 @@ import { ProfilePage } from './components/Profile/Profile';
 import ForgotPasswordPage from './components/users/ForgotPassword';
 import { AdminHomePage } from './components/homePage/AdminHomePage';
 import MainPageUserGroup from './components/UserGroup.js/MainPage';
+import { AnnotationPanel } from './components/AnnotationPanel/annotationHome';
+import { EachFigureCopy } from './components/AnnotationPanel/EachFigureCopy';
 
 export default function Routes () {
     return <div> <Router history={history}>
@@ -27,6 +29,8 @@ export default function Routes () {
         <Route path="/register" exact component= {Registration} />
         <Route path="/home" exact component= {SearchPage} />
         <Route path="/profile" exact component= {ProfilePage} />
+        <Route path="/annotationpanel" exact component= {AnnotationPanel} />
+        <Route path="/annotationpanel/:id" exact component= {EachFigureCopy} />
         <Route path="/forgotPassword" exact component= {ForgotPasswordPage} />
         <Route path="/adminHome" exact component= {AdminHomePage} />
         <Route path="/userGroup" exact component= {MainPageUserGroup} />

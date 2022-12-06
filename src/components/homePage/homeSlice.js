@@ -10,7 +10,10 @@ export const homeSlice = createSlice({
         elasticSearchResults: {},
         allGroups:[],
         allUserGroups:[],
-        annotatedSearchResults: []
+        annotatedSearchResults: [],
+        annotatedPanelResults: [],
+        annotatedPanelResults1: [],
+
     },
     reducers:{
         //to create an action to update state variable called list in the initial State
@@ -28,13 +31,19 @@ export const homeSlice = createSlice({
         },
         setAnnotatedSearchResults:(state,action) => {
             state.annotatedSearchResults = action.payload;
+        },
+        setAnnotatedPanelResults:(state,action) => {
+            state.annotatedPanelResults = action.payload;
+        },
+        setAnnotatedPanelResults1:(state,action) => {
+            state.annotatedPanelResults1 = action.payload;
         }
 
     }
 });
 
 //to expose actions that can be called from any where in the application
-export const {setAllUsers, setElasticSearchResults, setAllGroups, setAllUserGroups, setAnnotatedSearchResults} = homeSlice.actions;
+export const {setAllUsers, setElasticSearchResults, setAllGroups, setAllUserGroups, setAnnotatedSearchResults, setAnnotatedPanelResults, setAnnotatedPanelResults1} = homeSlice.actions;
 
 //to expose selectors when components need store values in store
 export const AllUsersSelector = (state) => state.homeSlice.allUsers;
@@ -42,6 +51,9 @@ export const ElasticSearchSelector = (state) => state.homeSlice.elasticSearchRes
 export const AllGroupSelector = (state) => state.homeSlice.allGroups;
 export const AllUserGroupSelector = (state) => state.homeSlice.allUserGroups;
 export const AnnotatedSearchResultSelector = (state) => state.homeSlice.annotatedSearchResults;
+export const AnnotatedPanelResultSelector = (state) => state.homeSlice.annotatedPanelResults;
+export const AnnotatedPanelResultSelector1 = (state) => state.homeSlice.annotatedPanelResults1;
+
 
 
 
@@ -132,6 +144,44 @@ export function getAnnotatedSearchResult(user){
     }
 }
 
+export function getAnnotatedPanelResult(user){
+    // 
+    return async (dispatch) => {
+        try{
+            // dispatch(setAllUsers([]));
+            Api.call("/elasticsearch/annotationpanelsearch?user_id="+user,{method:'GET' },(response)=> {
+                //if success
+                response = JSON.parse(response);
+                dispatch(setAnnotatedPanelResults(response.data))
+            },(error,status,content)=>{
+                //error send to snackbar
+            dispatch(setAnnotatedPanelResults([]))
+            });
+        }catch(error){
+            dispatch(setAnnotatedPanelResults([]))
+        }
+    }
+}
+
+export function getAnnotatedPanelResult1(fig_file){
+    // 
+    return async (dispatch) => {
+        try{
+            // dispatch(setAllUsers([]));
+            Api.call("/elasticsearch/annotationpanelsearch1?fig_file="+fig_file,{method:'GET' },(response)=> {
+                //if success
+                response = JSON.parse(response);
+                dispatch(setAnnotatedPanelResults1(response.data))
+            },(error,status,content)=>{
+                //error send to snackbar
+            dispatch(setAnnotatedPanelResults1([]))
+            });
+        }catch(error){
+            dispatch(setAnnotatedPanelResults1([]))
+        }
+    }
+}
+
 
 
 export function getAllGroups(){
@@ -186,6 +236,30 @@ export function assignGroup(form){
                 response = JSON.parse(response);
                 Swal.fire('', response["message"], 'success').then((result) => {
                     dispatch(getAllUserGroups());
+                    })
+            },(error,status,content)=>{
+                //error send to snackbar
+            // dispatch(setAllGroups([]))
+
+
+            });
+        }catch(error){
+            // dispatch(setAllGroups([]))
+        }
+    }
+}
+
+
+export function annotateValue(user, fig_file){
+    // 
+    return async (dispatch) => {
+        try{
+            // dispatch(setAllUsers([]));
+            Api.call("/elasticsearch/annotateValue?user_id="+user+"&fig_file="+fig_file,{method:'POST'},(response)=> {
+                //if success
+                response = JSON.parse(response);
+                Swal.fire('', response["message"], 'success').then((result) => {
+                    // dispatch(getAllUserGroups());
                     })
             },(error,status,content)=>{
                 //error send to snackbar
